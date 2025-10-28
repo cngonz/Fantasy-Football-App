@@ -18,6 +18,7 @@ struct SignUpView: View {
         VStack(spacing: 20) {
             Text("Sign Up")
                 .font(.largeTitle)
+                .foregroundColor(Color.white)
                 .bold()
 
             TextField("Email", text: $email)
@@ -45,11 +46,19 @@ struct SignUpView: View {
             }
             .padding()
             .frame(maxWidth: .infinity)
-            .background(Color.green)
+            .background(Color.blue)
             .foregroundColor(.white)
             .cornerRadius(8)
+            
+            Button("Go Back") {
+                dismiss()
+            }
+            .padding(.top, 10)
         }
         .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.appBackground)
+        .ignoresSafeArea()
     }
 }
 

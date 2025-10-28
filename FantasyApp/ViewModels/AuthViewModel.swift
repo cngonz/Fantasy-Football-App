@@ -9,6 +9,7 @@ import FirebaseAuth
 
 class AuthViewModel: ObservableObject {
     @Published var user: User?
+    @Published var errorMessage: String?
     
     init() {
         self.user = Auth.auth().currentUser
@@ -17,6 +18,7 @@ class AuthViewModel: ObservableObject {
     func signIn(email: String, password: String){
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] result, error in
             if let error = error {
+                self?.errorMessage = error.localizedDescription
                 print("Error signing in: \(error.localizedDescription)")
                 return
             }
