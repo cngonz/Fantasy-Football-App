@@ -1,0 +1,1 @@
+An iOS app for building fantasy football rosters and figuring out if a trade is actually worth it. The Trade Analyzer uses a small neural network trained on historical player stats to score any trade from 1 (you got fleeced) to 100 (heist of the century).
