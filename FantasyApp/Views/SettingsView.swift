@@ -10,55 +10,46 @@ import SwiftUI
 struct SettingsView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @State private var notificationsEnabled = true
-    @State private var darkModeEnabled = false
 
     var body: some View {
         ZStack {
             Color.appBackground.ignoresSafeArea()
 
             List {
-                // MARK: - Account Section
-                Section(header: Text("Account").foregroundColor(.white)) {
+                Section(header: Text("Account").foregroundColor(.appTextSecondary)) {
                     HStack {
                         Image(systemName: "person.circle.fill")
-                            .foregroundColor(.blue)
+                            .foregroundColor(.appAccent)
                             .font(.system(size: 40))
                         VStack(alignment: .leading) {
-                            Text(authViewModel.userSession?.email ?? "Guest User")
-                                .foregroundColor(.white)
-                                .font(.headline)
+                            Text(authViewModel.user?.email ?? "Guest User")
+                                .foregroundColor(.appTextPrimary)
+                                .font(.appHeadline)
                             Text("Fantasy Football Manager")
-                                .foregroundColor(.gray)
-                                .font(.subheadline)
+                                .foregroundColor(.appTextSecondary)
+                                .font(.appCaption)
                         }
                     }
                 }
-                .listRowBackground(Color.appBackground)
+                .listRowBackground(Color.appCardSurface)
 
-                // MARK: - Preferences Section
-                Section(header: Text("Preferences").foregroundColor(.white)) {
+                Section(header: Text("Preferences").foregroundColor(.appTextSecondary)) {
                     Toggle(isOn: $notificationsEnabled) {
                         Label("Enable Notifications", systemImage: "bell.fill")
-                    }
-                    Toggle(isOn: $darkModeEnabled) {
-                        Label("Dark Mode", systemImage: "moon.fill")
+                            .foregroundColor(.appTextPrimary)
                     }
                 }
-                .tint(.blue)
-                .listRowBackground(Color.appBackground)
+                .tint(.appAccent)
+                .listRowBackground(Color.appCardSurface)
 
-                // MARK: - About Section
-                Section(header: Text("About").foregroundColor(.white)) {
-                    NavigationLink(destination: Text("Version 1.0.0\n© 2025 FantasyApp Inc.")
-                        .foregroundColor(.white)
-                        .multilineTextAlignment(.center)
-                        .padding()) {
+                Section(header: Text("About").foregroundColor(.appTextSecondary)) {
+                    NavigationLink(destination: AppInfoView()) {
                         Label("App Info", systemImage: "info.circle.fill")
+                            .foregroundColor(.appTextPrimary)
                     }
                 }
-                .listRowBackground(Color.appBackground)
+                .listRowBackground(Color.appCardSurface)
 
-                // MARK: - Sign Out Button
                 Section {
                     Button(role: .destructive) {
                         authViewModel.signOut()
@@ -68,8 +59,9 @@ struct SettingsView: View {
                             Text("Sign Out")
                         }
                     }
+                    .buttonStyle(DestructiveButtonStyle())
                 }
-                .listRowBackground(Color.appBackground)
+                .listRowBackground(Color.appCardSurface)
             }
             .scrollContentBackground(.hidden)
             .background(Color.appBackground)

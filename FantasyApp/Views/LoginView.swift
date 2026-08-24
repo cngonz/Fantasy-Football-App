@@ -1,10 +1,3 @@
-//
-//  Untitled.swift
-//  FantasyApp
-//
-//  Created by Cesar N. Gonzalez on 9/11/25.
-//
-
 import SwiftUI
 
 struct LoginView: View {
@@ -18,47 +11,41 @@ struct LoginView: View {
             Image("FantasyFootballAppLogo")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 200, height: 200)
-            
-            Text("Login")
-                .font(.largeTitle)
-                .foregroundColor(Color.white)
-                .bold()
+                .frame(width: 180, height: 180)
+
+            Text("Welcome Back")
+                .font(.appLargeTitle)
+                .foregroundColor(.appTextPrimary)
 
             TextField("Email", text: $email)
                 .autocapitalization(.none)
                 .keyboardType(.emailAddress)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .textFieldStyle(AppTextFieldStyle())
 
             SecureField("Password", text: $password)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .textFieldStyle(AppTextFieldStyle())
 
-            Button("Login") {
+            Button("Log In") {
                 authViewModel.signIn(email: email, password: password)
             }
-            .padding()
-            .frame(maxWidth: .infinity)
-            .background(Color.blue)
-            .foregroundColor(.white)
-            .cornerRadius(8)
+            .buttonStyle(PrimaryButtonStyle(isEnabled: !email.isEmpty && !password.isEmpty))
             .disabled(email.isEmpty || password.isEmpty)
-            .opacity(email.isEmpty || password.isEmpty ? 0.5 : 1)
-            
+
             if let errorMessage = authViewModel.errorMessage {
-                withAnimation {
-                    Text(errorMessage)
-                        .foregroundColor(.red)
-                        .font(.footnote)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal)
-                }
+                Text(errorMessage)
+                    .foregroundColor(.appDanger)
+                    .font(.appCaption)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+                    .transition(.opacity)
             }
 
-            Button("Don’t have an account? Sign up") {
+            Button("Don't have an account? Sign up") {
                 showSignUp = true
             }
+            .buttonStyle(SecondaryButtonStyle())
         }
-        .padding()
+        .padding(24)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea()
         .background(Color.appBackground)

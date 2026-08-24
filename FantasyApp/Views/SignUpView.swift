@@ -16,46 +16,41 @@ struct SignUpView: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            Text("Sign Up")
-                .font(.largeTitle)
-                .foregroundColor(Color.white)
-                .bold()
+            Text("Create Account")
+                .font(.appLargeTitle)
+                .foregroundColor(.appTextPrimary)
 
             TextField("Email", text: $email)
                 .autocapitalization(.none)
                 .keyboardType(.emailAddress)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .textFieldStyle(AppTextFieldStyle())
 
             SecureField("Password", text: $password)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .textFieldStyle(AppTextFieldStyle())
 
             if let errorMessage = errorMessage {
                 Text(errorMessage)
-                    .foregroundColor(.red)
-                    .font(.footnote)
+                    .foregroundColor(.appDanger)
+                    .font(.appCaption)
             }
 
             Button("Create Account") {
                 authViewModel.signUp(email: email, password: password) { success, error in
                     if success {
-                        dismiss() // close sign-up sheet and return to LoginView
+                        dismiss()
                     } else {
                         errorMessage = error
                     }
                 }
             }
-            .padding()
-            .frame(maxWidth: .infinity)
-            .background(Color.blue)
-            .foregroundColor(.white)
-            .cornerRadius(8)
-            
+            .buttonStyle(PrimaryButtonStyle())
+
             Button("Go Back") {
                 dismiss()
             }
-            .padding(.top, 10)
+            .buttonStyle(SecondaryButtonStyle())
         }
-        .padding()
+        .padding(24)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.appBackground)
         .ignoresSafeArea()
